@@ -1,12 +1,12 @@
-package com.ozerutkualtun.hibernate.model;
+package com.ozerutkualtun.hibernate;
 
+import com.ozerutkualtun.hibernate.model.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.List;
 
-public class QueryStudentDemo {
+public class UpdateStudentDemo {
 
     public static void main(String[] args) {
 
@@ -18,10 +18,15 @@ public class QueryStudentDemo {
         Session session = sessionFactory.getCurrentSession();
 
         try {
+            Integer studentId = 1;
+
             session.beginTransaction();
 
-            List<Student> students = session.createQuery("from Student s where  s.lastName = 'Altun' ").getResultList();
-            students.forEach(System.out::println);
+            Student student = session.get(Student.class, studentId);
+            student.setFirstName("Updated Firstname");
+            student.setEmail("updated@updated.com");
+
+            session.save(student);
 
             session.getTransaction().commit();
 
