@@ -18,12 +18,25 @@ public class HibernateApplication {
 
         try {
 
-            Student student = new Student("John", "Doe", "jonh_doe@mail.com");
+            Student student = new Student("Utku", "Altun", "utku.altun@mail.com");
             session.beginTransaction();
 
             session.save(student);
 
             session.getTransaction().commit();
+
+
+            // retrieving an entity from db via hibernate.
+
+            session = sessionFactory.getCurrentSession();
+            session.beginTransaction();
+
+            Student savedStudent = session.get(Student.class, student.getId());
+
+            System.out.println(savedStudent);
+
+            session.getTransaction().commit();
+
 
         } finally {
             sessionFactory.close();
